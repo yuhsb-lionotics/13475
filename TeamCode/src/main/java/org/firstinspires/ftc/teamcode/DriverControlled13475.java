@@ -45,6 +45,7 @@ public class DriverControlled13475 extends LinearOpMode {
     @Override
     public void runOpMode() {
         setUp();
+        int spinnerCount==0;
         boolean flipperCount=false;
 
 
@@ -97,6 +98,26 @@ public class DriverControlled13475 extends LinearOpMode {
                 spinner2.setPower(1);
                 spinner1.setPower(0);
             }
+            
+            if(gamepad2.x){//remember to  set spinnerCount. This setup assumes setting power keeps power set 
+while(gamepad1.a);//this keeps number from increasing more than one
+spinnerCount++;
+if(spinnerCount==0){//spin in
+spinner2.setPower(0);
+spinner1.setPower(1);
+spinnerCount=1;
+}
+else if(spinnerCount==1){//spin stop
+spinner2.setPower(.5);
+spinner1.setPower(.5);
+spinnerCount=2;
+}
+else if(spinnerCount==2){//spin out
+spinner2.setPower(1);
+spinner1.setPower(0);
+spinnerCount=0;
+}
+
 
 
 
