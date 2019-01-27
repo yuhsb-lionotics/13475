@@ -43,12 +43,12 @@ public class DriverControlled13475 extends LinearOpMode {
     private CRServo spinner2 = null;
     private Servo dumper1 = null;
     private Servo dumper2 = null;
+    private Servo flippy = null;
 
 
     @Override
     public void runOpMode() {
         setUp();
-
         boolean flipperCount = false;
         int spinnerCount = 0;
 
@@ -81,42 +81,54 @@ public class DriverControlled13475 extends LinearOpMode {
             leftDrive.setPower(driveLeft);
             rightDrive.setPower(driveRight);
             landerRiser1.setPower(landerRiserpwr);
-            landerRiser2.setPower(-landerRiserpwr);
+            landerRiser2.setPower(landerRiserpwr);
             spinnyArmExt.setPower(spinnyArmExtpwr);
 
             //servos code
 
             if (gamepad2.x) {// This setup assumes setting power keeps power set
-                while (gamepad1.x) ;//this keeps number from increasing more than one
-                spinnerCount++;
+                while (gamepad2.x) {
+                    //this keeps number from increasing more than one
+                }
+                //spinnerCount=spinnerCount+1;
                 if (spinnerCount == 0) {//spin in
-                    spinner2.setPower(0);
+                    spinner2.setPower(1);
                     spinner1.setPower(1);
                     spinnerCount = 1;
                 } else if (spinnerCount == 1) {//spin stop
-                    spinner2.setPower(.5);
-                    spinner1.setPower(.5);
+                    spinner2.setPower(0);
+                    spinner1.setPower(0);
                     spinnerCount = 2;
                 } else if (spinnerCount == 2) {//spin out
-                    spinner2.setPower(1);
-                    spinner1.setPower(0);
+                    spinner2.setPower(-1);
+                    spinner1.setPower(-1);
                     spinnerCount = 0;
                 }
-                //key to rb and lb
 
-                if((gamepad2.right_bumper)){
-                    dumper1.setPosition(90);
-                    dumper2.setPosition(90);
-                }
-                if((gamepad2.left_bumper)){
-                    dumper1.setPosition(0);
-                    dumper2.setPosition(0);
-                }
-
-
-
-                //feedback();
             }
+//dumper
+            if (gamepad2.right_bumper) {
+                dumper1.setPosition(.5);
+                dumper2.setPosition(.5);
+            }
+            if (gamepad2.left_bumper) {
+                dumper1.setPosition(.002);
+                dumper2.setPosition(.002);
+            }
+
+//flipper
+
+            if (gamepad2.y) {
+
+                if (flipperCount == false) {
+                    flippy.setPosition(0);
+                    flipperCount = true;
+                } else if (flipperCount == true) {
+                    flippy.setPosition(1);
+                    flipperCount = false;
+                }
+            }
+            //feedback();
         }
     }
     private void setUp(){
@@ -133,15 +145,16 @@ public class DriverControlled13475 extends LinearOpMode {
         spinnyArmTilt2 = hardwareMap.get(DcMotor.class, "spinny_arm_tilt2");
 
 
-        spinner1 = hardwareMap.get(CRServo.class, "spinner1");
-        spinner2 = hardwareMap.get(CRServo.class, "spinner2");
-        dumper1= hardwareMap.get(Servo.class,"dumper1");
-        dumper2= hardwareMap.get(Servo.class,"dumper2");
+        spinner1 = hardwareMap.crservo.get("spinner1");
+        spinner2 = hardwareMap.crservo.get( "spinner2");
+        dumper1= hardwareMap.servo.get("dumper1");
+        dumper2= hardwareMap.servo.get("dumper2");
+        flippy= hardwareMap.servo.get("flippy_flipper");
 
 
         spinnyArmExt.setDirection(DcMotor.Direction.REVERSE);
         spinnyArmTilt1.setDirection(DcMotor.Direction.FORWARD);
-        spinnyArmTilt2.setDirection(DcMotor.Direction.FORWARD);
+        spinnyArmTilt2.setDirection(DcMotor.Direction.REVERSE);
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
 
