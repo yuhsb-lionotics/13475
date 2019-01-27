@@ -8,12 +8,14 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-//this is a test for github - please ignore
 
-@Autonomous(name = "BlueGold13475", group = "Autonomous")
+
+
+@Autonomous(name = "testi", group = "Autonomous")
 //@Disabled
-public class BlueGold13475 extends LinearOpMode {
-    //private GoldAlignDetector detector;
+public class Testi extends LinearOpMode {
+
+    private GoldAlignDetector detector;
 
     private DcMotor leftDrive = null;
     private DcMotor rightDrive = null;
@@ -36,66 +38,11 @@ public class BlueGold13475 extends LinearOpMode {
 
         setUp();
         waitForStart();
-            /*
-            double goldPos = detector.getXPosition();// this gets gold location - in theory.
-            if(goldPos >=200){
-                encoderDrive(DRIVE_SPEED, 4.5, -4.5, 0, 5.0);//turn 60
-                encoderDrive(DRIVE_SPEED, 17, 17, 0, 5.0); //move to ball 1
-                encoderDrive(DRIVE_SPEED, 6.5, -6.5, 0, 5.0);//turn 60
-                encoderDrive(DRIVE_SPEED, 10, 10, 0, 5.0);//backup
-                encoderDrive(DRIVE_SPEED, -58, -58, 0, 5.0);//backup
-            }
-            else if((goldPos <=350) && (goldPos >=201)){
-                encoderDrive(DRIVE_SPEED, 17, 17, 0, 5.0); //move to ball 2
-                encoderDrive(DRIVE_SPEED, 12, -12, 0, 5.0);//turn 90
-                encoderDrive(DRIVE_SPEED, -48, -48, 0, 5.0);//backup
-            }
-            else if((goldPos >=350)){
-                encoderDrive(DRIVE_SPEED, -4.5, 4.5, 0, 5.0);//turn -60
-                encoderDrive(DRIVE_SPEED, 17, 17, 0, 5.0); //move to ball 3
-                encoderDrive(DRIVE_SPEED, -6.5, 6.5, 0, 5.0);//turn 60
-                encoderDrive(DRIVE_SPEED, -28, -28, 0, 5.0);//backup to square
-            }
-            */
+        //landerRiserer(5,.6);
+        encoderDrive(1,0,0,4000,22.5);
+        sleep(1500);//stop a bissel
+        encoderDrive(1,2,2,0,1.5);
 
-
-
-        // Step through each leg of the path,
-        // Note: Reverse movement is obtained by setting a negative distance (not speed).
-        //Timeout is how much time is allotted for the motor to get to a desired position
-        //i am assuming 90 turn is 12'
-
-
-
-        //this is code to disembark
-        //encoderDrive(RISER_SPEED, 0, 0, 7, 15.0); //riser
-        //encoderDrive(DRIVE_SPEED, 4, 4, 0, 5.0);//move after land
-        //encoderDrive(TURN_SPEED, 8, -8, 0, 5.0); // spin 60
-
-        //code to balls
-        encoderDrive(DRIVE_SPEED, 4.5, -4.5, 0, 5.0);//turn 60
-        encoderDrive(DRIVE_SPEED, 17, 17, 0, 5.0); //move to ball 1
-        encoderDrive(DRIVE_SPEED, 6.5, -6.5, 0, 5.0);//turn 60
-        encoderDrive(DRIVE_SPEED, 10, 10, 0, 5.0);//backup
-        //check ball
-
-        encoderDrive(DRIVE_SPEED, -10, -10, 0, 5.0);//move to ball two
-        //check
-        encoderDrive(DRIVE_SPEED, -10.25, -10.25, 0, 5.0);//move to ball three
-        //check
-
-        //code to sqver
-        //encoderDrive(DRIVE_SPEED, -28, -28, 0, 5.0);//move to turn position
-        encoderDrive(DRIVE_SPEED, -4.2, 4.2, 0, 5.0);
-        encoderDrive(DRIVE_SPEED, 57, 57, 0, 5.0);//move to square
-
-        //to crater
-        encoderDrive(DRIVE_SPEED, 12.25, -12.25, 0, 5.0);//180 turn
-        encoderDrive(DRIVE_SPEED, 50, 50, 0, 5.0);
-
-
-        telemetry.addData("Path", "Complete");
-        telemetry.update();
     }
 
     /*
@@ -172,6 +119,7 @@ public class BlueGold13475 extends LinearOpMode {
         }
     }
 
+
     private void setUp() {
         /*
          * Initialize the drive system variables.
@@ -207,26 +155,26 @@ public class BlueGold13475 extends LinearOpMode {
         //DodeCV stuff
 
 
-/*
-            // Set up detector
-            detector = new GoldAlignDetector(); // Create detector
-            detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance()); // Initialize it with the app context and camera
-            detector.useDefaults(); // Set detector to use default settings
 
-            // Optional tuning
-            detector.alignSize = 100; // How wide (in pixels) is the range in which the gold object will be aligned. (Represented by green bars in the preview)
-            detector.alignPosOffset = 0; // How far from center frame to offset this alignment zone.
-            detector.downscale = 0.4; // How much to downscale the input frames
+        // Set up detector
+        detector = new GoldAlignDetector(); // Create detector
+        detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance()); // Initialize it with the app context and camera
+        detector.useDefaults(); // Set detector to use default settings
 
-            detector.areaScoringMethod = DogeCV.AreaScoringMethod.MAX_AREA; // Can also be PERFECT_AREA
-            //detector.perfectAreaScorer.perfectArea = 10000; // if using PERFECT_AREA scoring
-            detector.maxAreaScorer.weight = 0.005; //
+        // Optional tuning
+        detector.alignSize = 100; // How wide (in pixels) is the range in which the gold object will be aligned. (Represented by green bars in the preview)
+        detector.alignPosOffset = 0; // How far from center frame to offset this alignment zone.
+        detector.downscale = 0.4; // How much to downscale the input frames
 
-            detector.ratioScorer.weight = 5; //
-            detector.ratioScorer.perfectRatio = 1.0; // Ratio adjustment
+        detector.areaScoringMethod = DogeCV.AreaScoringMethod.MAX_AREA; // Can also be PERFECT_AREA
+        //detector.perfectAreaScorer.perfectArea = 10000; // if using PERFECT_AREA scoring
+        detector.maxAreaScorer.weight = 0.005; //
 
-            detector.enable(); // Start the detector!
-*/
+        detector.ratioScorer.weight = 5; //
+        detector.ratioScorer.perfectRatio = 1.0; // Ratio adjustment
+
+        //detector.enable(); // Start the detector!
+
     }
 
 }
