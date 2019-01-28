@@ -106,19 +106,19 @@ public class DriverControlled13475 extends LinearOpMode {
                 }
                 }
 */
-            if (gamepad2.x) {//spin in
-                spinner2.setPower(-1);
-                spinner1.setPower(1);
-                spinnerCount = 1;
-            } else if (gamepad2.a) {//spin stop
-                spinner2.setPower(0);
-                spinner1.setPower(0);
-                spinnerCount = 2;
-            } else if (gamepad2.b) {//spin out
-                spinner2.setPower(1);
-                spinner1.setPower(-1);
-                spinnerCount = 0;
-            }
+                if (gamepad2.x) {//spin in
+                    spinner2.setPower(-1);
+                    spinner1.setPower(1);
+                    spinnerCount = 1;
+                } else if (gamepad2.a) {//spin stop
+                    spinner2.setPower(0);
+                    spinner1.setPower(0);
+                    spinnerCount = 2;
+                } else if (gamepad2.b) {//spin out
+                    spinner2.setPower(1);
+                    spinner1.setPower(-1);
+                    spinnerCount = 0;
+                }
 
 
 //dumper
