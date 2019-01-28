@@ -6,18 +6,23 @@ import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-//this is a test for github - please ignore
 
-@Autonomous(name = "BlueGold13475", group = "Autonomous")
+
+
+@Autonomous(name = "testi", group = "Autonomous")
 //@Disabled
-public class BlueGold13475 extends LinearOpMode {
-    //private GoldAlignDetector detector;
+public class Testi extends LinearOpMode {
+
+    private GoldAlignDetector detector;
 
     private DcMotor leftDrive = null;
     private DcMotor rightDrive = null;
-    private DcMotor landerRiser = null;
+    private DcMotor landerRiser1 = null;
+    private DcMotor landerRiser2 = null;
+    private Servo flippy = null;
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -36,66 +41,16 @@ public class BlueGold13475 extends LinearOpMode {
 
         setUp();
         waitForStart();
-            /*
-            double goldPos = detector.getXPosition();// this gets gold location - in theory.
-            if(goldPos >=200){
-                encoderDrive(DRIVE_SPEED, 4.5, -4.5, 0, 5.0);//turn 60
-                encoderDrive(DRIVE_SPEED, 17, 17, 0, 5.0); //move to ball 1
-                encoderDrive(DRIVE_SPEED, 6.5, -6.5, 0, 5.0);//turn 60
-                encoderDrive(DRIVE_SPEED, 10, 10, 0, 5.0);//backup
-                encoderDrive(DRIVE_SPEED, -58, -58, 0, 5.0);//backup
-            }
-            else if((goldPos <=350) && (goldPos >=201)){
-                encoderDrive(DRIVE_SPEED, 17, 17, 0, 5.0); //move to ball 2
-                encoderDrive(DRIVE_SPEED, 12, -12, 0, 5.0);//turn 90
-                encoderDrive(DRIVE_SPEED, -48, -48, 0, 5.0);//backup
-            }
-            else if((goldPos >=350)){
-                encoderDrive(DRIVE_SPEED, -4.5, 4.5, 0, 5.0);//turn -60
-                encoderDrive(DRIVE_SPEED, 17, 17, 0, 5.0); //move to ball 3
-                encoderDrive(DRIVE_SPEED, -6.5, 6.5, 0, 5.0);//turn 60
-                encoderDrive(DRIVE_SPEED, -28, -28, 0, 5.0);//backup to square
-            }
-            */
+        //landerRiserer(5,.6);
+        encoderDrive(1,0,0,4000,15.5);
+        sleep(500);//stop a bissel
+        encoderDrive(1,2,2,0,1);
+        encoderDrive(1,2,-2,0,1);
+        encoderDrive(1,-5,-5,0,3);
+        flippy.setPosition(0);
+        sleep(500);
+        flippy.setPosition(1);
 
-
-
-        // Step through each leg of the path,
-        // Note: Reverse movement is obtained by setting a negative distance (not speed).
-        //Timeout is how much time is allotted for the motor to get to a desired position
-        //i am assuming 90 turn is 12'
-
-
-
-        //this is code to disembark
-        //encoderDrive(RISER_SPEED, 0, 0, 7, 15.0); //riser
-        //encoderDrive(DRIVE_SPEED, 4, 4, 0, 5.0);//move after land
-        //encoderDrive(TURN_SPEED, 8, -8, 0, 5.0); // spin 60
-
-        //code to balls
-        encoderDrive(DRIVE_SPEED, 4.5, -4.5, 0, 5.0);//turn 60
-        encoderDrive(DRIVE_SPEED, 17, 17, 0, 5.0); //move to ball 1
-        encoderDrive(DRIVE_SPEED, 6.5, -6.5, 0, 5.0);//turn 60
-        encoderDrive(DRIVE_SPEED, 10, 10, 0, 5.0);//backup
-        //check ball
-
-        encoderDrive(DRIVE_SPEED, -10, -10, 0, 5.0);//move to ball two
-        //check
-        encoderDrive(DRIVE_SPEED, -10.25, -10.25, 0, 5.0);//move to ball three
-        //check
-
-        //code to sqver
-        //encoderDrive(DRIVE_SPEED, -28, -28, 0, 5.0);//move to turn position
-        encoderDrive(DRIVE_SPEED, -4.2, 4.2, 0, 5.0);
-        encoderDrive(DRIVE_SPEED, 57, 57, 0, 5.0);//move to square
-
-        //to crater
-        encoderDrive(DRIVE_SPEED, 12.25, -12.25, 0, 5.0);//180 turn
-        encoderDrive(DRIVE_SPEED, 50, 50, 0, 5.0);
-
-
-        telemetry.addData("Path", "Complete");
-        telemetry.update();
     }
 
     /*
@@ -120,24 +75,28 @@ public class BlueGold13475 extends LinearOpMode {
             newLeftTarget = leftDrive.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
             newRightTarget = rightDrive.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
 
-            newRiserTarget = landerRiser.getCurrentPosition() + (int) (riser * COUNTS_PER_INCH);
+            newRiserTarget = landerRiser1.getCurrentPosition() + (int) (riser * COUNTS_PER_INCH);
+            newRiserTarget = landerRiser2.getCurrentPosition() + (int) (riser * COUNTS_PER_INCH);
 
             leftDrive.setTargetPosition(newLeftTarget);
             rightDrive.setTargetPosition(newRightTarget);
 
-            landerRiser.setTargetPosition(newRiserTarget);
+            landerRiser1.setTargetPosition(newRiserTarget);
+            landerRiser2.setTargetPosition(newRiserTarget);
 
             // Turn On RUN_TO_POSITION
             leftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            landerRiser.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            landerRiser1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            landerRiser2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // reset the timeout time and start motion.
             runtime.reset();
             leftDrive.setPower(Math.abs(speed));
             rightDrive.setPower(Math.abs(speed));
-            landerRiser.setPower(Math.abs(speed));
+            landerRiser1.setPower(Math.abs(speed));
+            landerRiser2.setPower(Math.abs(speed));
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
@@ -147,30 +106,33 @@ public class BlueGold13475 extends LinearOpMode {
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (leftDrive.isBusy() && rightDrive.isBusy() || landerRiser.isBusy())) {
+                    (leftDrive.isBusy() && rightDrive.isBusy() || landerRiser1.isBusy())) {
 
                 // Display it for the driver.
                 telemetry.addData("Path1", "Running to %7d :%7d :%7d", newLeftTarget, newRightTarget, newRiserTarget);
                 telemetry.addData("Path2", "Running at %7d :%7d :%7d",
                         leftDrive.getCurrentPosition(),
                         rightDrive.getCurrentPosition(),
-                        landerRiser.getCurrentPosition());
+                        landerRiser1.getCurrentPosition());
                 telemetry.update();
             }
 
             // Stop all motion;
             leftDrive.setPower(0);
             rightDrive.setPower(0);
-            landerRiser.setPower(0);
+            landerRiser1.setPower(0);
+            landerRiser2.setPower(0);
 
             // Turn off RUN_TO_POSITION
             leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            landerRiser.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            landerRiser1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            landerRiser2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             //  sleep(250);   // optional pause after each move
         }
     }
+
 
     private void setUp() {
         /*
@@ -179,7 +141,9 @@ public class BlueGold13475 extends LinearOpMode {
          */
         leftDrive = hardwareMap.get(DcMotor.class, "left_drive");
         rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
-        landerRiser = hardwareMap.get(DcMotor.class, "lander_riser");
+        landerRiser1 = hardwareMap.get(DcMotor.class, "lander_riser1");
+        landerRiser2 = hardwareMap.get(DcMotor.class, "lander_riser2");
+        flippy= hardwareMap.servo.get("flippy_flipper");
 
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -191,42 +155,44 @@ public class BlueGold13475 extends LinearOpMode {
 
         leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        landerRiser.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        landerRiser1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        landerRiser2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        landerRiser.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        landerRiser1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        landerRiser2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Send telemetry message to indicate successful Encoder reset
         telemetry.addData("Path0", "Starting at %7d :%7d :%7d",
                 leftDrive.getCurrentPosition(),
                 rightDrive.getCurrentPosition(),
-                landerRiser.getCurrentPosition());
+                landerRiser1.getCurrentPosition());
         telemetry.update();
 
         //DodeCV stuff
 
 
-/*
-            // Set up detector
-            detector = new GoldAlignDetector(); // Create detector
-            detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance()); // Initialize it with the app context and camera
-            detector.useDefaults(); // Set detector to use default settings
 
-            // Optional tuning
-            detector.alignSize = 100; // How wide (in pixels) is the range in which the gold object will be aligned. (Represented by green bars in the preview)
-            detector.alignPosOffset = 0; // How far from center frame to offset this alignment zone.
-            detector.downscale = 0.4; // How much to downscale the input frames
+        // Set up detector
+        detector = new GoldAlignDetector(); // Create detector
+        detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance()); // Initialize it with the app context and camera
+        detector.useDefaults(); // Set detector to use default settings
 
-            detector.areaScoringMethod = DogeCV.AreaScoringMethod.MAX_AREA; // Can also be PERFECT_AREA
-            //detector.perfectAreaScorer.perfectArea = 10000; // if using PERFECT_AREA scoring
-            detector.maxAreaScorer.weight = 0.005; //
+        // Optional tuning
+        detector.alignSize = 100; // How wide (in pixels) is the range in which the gold object will be aligned. (Represented by green bars in the preview)
+        detector.alignPosOffset = 0; // How far from center frame to offset this alignment zone.
+        detector.downscale = 0.4; // How much to downscale the input frames
 
-            detector.ratioScorer.weight = 5; //
-            detector.ratioScorer.perfectRatio = 1.0; // Ratio adjustment
+        detector.areaScoringMethod = DogeCV.AreaScoringMethod.MAX_AREA; // Can also be PERFECT_AREA
+        //detector.perfectAreaScorer.perfectArea = 10000; // if using PERFECT_AREA scoring
+        detector.maxAreaScorer.weight = 0.005; //
 
-            detector.enable(); // Start the detector!
-*/
+        detector.ratioScorer.weight = 5; //
+        detector.ratioScorer.perfectRatio = 1.0; // Ratio adjustment
+
+        //detector.enable(); // Start the detector!
+
     }
 
 }

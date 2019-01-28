@@ -85,14 +85,14 @@ public class DriverControlled13475 extends LinearOpMode {
             spinnyArmExt.setPower(spinnyArmExtpwr);
 
             //servos code
-
+/*
             if (gamepad2.x) {// This setup assumes setting power keeps power set
                 while (gamepad2.x) {
                     //this keeps number from increasing more than one
                 }
                 //spinnerCount=spinnerCount+1;
                 if (spinnerCount == 0) {//spin in
-                    spinner2.setPower(1);
+                    spinner2.setPower(-1);
                     spinner1.setPower(1);
                     spinnerCount = 1;
                 } else if (spinnerCount == 1) {//spin stop
@@ -100,12 +100,27 @@ public class DriverControlled13475 extends LinearOpMode {
                     spinner1.setPower(0);
                     spinnerCount = 2;
                 } else if (spinnerCount == 2) {//spin out
-                    spinner2.setPower(-1);
+                    spinner2.setPower(1);
                     spinner1.setPower(-1);
                     spinnerCount = 0;
                 }
-
+                }
+*/
+            if (gamepad2.x) {//spin in
+                spinner2.setPower(-1);
+                spinner1.setPower(1);
+                spinnerCount = 1;
+            } else if (gamepad2.a) {//spin stop
+                spinner2.setPower(0);
+                spinner1.setPower(0);
+                spinnerCount = 2;
+            } else if (gamepad2.b) {//spin out
+                spinner2.setPower(1);
+                spinner1.setPower(-1);
+                spinnerCount = 0;
             }
+
+
 //dumper
             if (gamepad2.right_bumper) {
                 dumper1.setPosition(.5);

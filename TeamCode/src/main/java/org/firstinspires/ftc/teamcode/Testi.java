@@ -6,6 +6,7 @@ import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
@@ -19,7 +20,9 @@ public class Testi extends LinearOpMode {
 
     private DcMotor leftDrive = null;
     private DcMotor rightDrive = null;
-    private DcMotor landerRiser = null;
+    private DcMotor landerRiser1 = null;
+    private DcMotor landerRiser2 = null;
+    private Servo flippy = null;
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -39,9 +42,14 @@ public class Testi extends LinearOpMode {
         setUp();
         waitForStart();
         //landerRiserer(5,.6);
-        encoderDrive(1,0,0,4000,22.5);
-        sleep(1500);//stop a bissel
-        encoderDrive(1,2,2,0,1.5);
+        encoderDrive(1,0,0,4000,15.5);
+        sleep(500);//stop a bissel
+        encoderDrive(1,2,2,0,1);
+        encoderDrive(1,2,-2,0,1);
+        encoderDrive(1,-5,-5,0,3);
+        flippy.setPosition(0);
+        sleep(500);
+        flippy.setPosition(1);
 
     }
 
@@ -67,24 +75,28 @@ public class Testi extends LinearOpMode {
             newLeftTarget = leftDrive.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
             newRightTarget = rightDrive.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
 
-            newRiserTarget = landerRiser.getCurrentPosition() + (int) (riser * COUNTS_PER_INCH);
+            newRiserTarget = landerRiser1.getCurrentPosition() + (int) (riser * COUNTS_PER_INCH);
+            newRiserTarget = landerRiser2.getCurrentPosition() + (int) (riser * COUNTS_PER_INCH);
 
             leftDrive.setTargetPosition(newLeftTarget);
             rightDrive.setTargetPosition(newRightTarget);
 
-            landerRiser.setTargetPosition(newRiserTarget);
+            landerRiser1.setTargetPosition(newRiserTarget);
+            landerRiser2.setTargetPosition(newRiserTarget);
 
             // Turn On RUN_TO_POSITION
             leftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            landerRiser.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            landerRiser1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            landerRiser2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // reset the timeout time and start motion.
             runtime.reset();
             leftDrive.setPower(Math.abs(speed));
             rightDrive.setPower(Math.abs(speed));
-            landerRiser.setPower(Math.abs(speed));
+            landerRiser1.setPower(Math.abs(speed));
+            landerRiser2.setPower(Math.abs(speed));
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
@@ -94,26 +106,28 @@ public class Testi extends LinearOpMode {
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (leftDrive.isBusy() && rightDrive.isBusy() || landerRiser.isBusy())) {
+                    (leftDrive.isBusy() && rightDrive.isBusy() || landerRiser1.isBusy())) {
 
                 // Display it for the driver.
                 telemetry.addData("Path1", "Running to %7d :%7d :%7d", newLeftTarget, newRightTarget, newRiserTarget);
                 telemetry.addData("Path2", "Running at %7d :%7d :%7d",
                         leftDrive.getCurrentPosition(),
                         rightDrive.getCurrentPosition(),
-                        landerRiser.getCurrentPosition());
+                        landerRiser1.getCurrentPosition());
                 telemetry.update();
             }
 
             // Stop all motion;
             leftDrive.setPower(0);
             rightDrive.setPower(0);
-            landerRiser.setPower(0);
+            landerRiser1.setPower(0);
+            landerRiser2.setPower(0);
 
             // Turn off RUN_TO_POSITION
             leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            landerRiser.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            landerRiser1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            landerRiser2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             //  sleep(250);   // optional pause after each move
         }
@@ -127,7 +141,9 @@ public class Testi extends LinearOpMode {
          */
         leftDrive = hardwareMap.get(DcMotor.class, "left_drive");
         rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
-        landerRiser = hardwareMap.get(DcMotor.class, "lander_riser");
+        landerRiser1 = hardwareMap.get(DcMotor.class, "lander_riser1");
+        landerRiser2 = hardwareMap.get(DcMotor.class, "lander_riser2");
+        flippy= hardwareMap.servo.get("flippy_flipper");
 
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -139,17 +155,19 @@ public class Testi extends LinearOpMode {
 
         leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        landerRiser.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        landerRiser1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        landerRiser2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        landerRiser.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        landerRiser1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        landerRiser2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Send telemetry message to indicate successful Encoder reset
         telemetry.addData("Path0", "Starting at %7d :%7d :%7d",
                 leftDrive.getCurrentPosition(),
                 rightDrive.getCurrentPosition(),
-                landerRiser.getCurrentPosition());
+                landerRiser1.getCurrentPosition());
         telemetry.update();
 
         //DodeCV stuff
