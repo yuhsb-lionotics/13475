@@ -46,50 +46,71 @@ import com.qualcomm.robotcore.util.ElapsedTime;
                     //the following code isn't ready for qualifiers :(
                      //instead, we will drive to crater, drop derky derk, and run for sweet life
 
-            //double goldPos = detector.getXPosition();// this gets gold location - in theory.
 
-/*
-            if(goldPos <=200){
+            if(detector.getXPosition()>=0 && (detector.getXPosition()<229)){
+                //left
+                detector.disable();
+                encoderDrive(DRIVE_SPEED, 2, 2, 0, 5.0);//turn 60
+                encoderDrive(DRIVE_SPEED, 7.5, -7.5, 0, 5.0);//turn 60
+                encoderDrive(DRIVE_SPEED, 21, 21, 0, 5.0); //move to ball 1
+                encoderDrive(DRIVE_SPEED, 14.5, -14.5, 0, 5.0);//turn 60
+                encoderDrive(DRIVE_SPEED, 15, 15, 0, 5.0);//backup
+                encoderDrive(DRIVE_SPEED, -62, -62, 0, 5.0);//backup
+                encoderDrive(DRIVE_SPEED, -6, 6, 0, 5.0);//turn 60
+                encoderDrive(DRIVE_SPEED, 58, 58, 0, 5.0);//backup
+                flippy.setPosition(0);
+                sleep(1000);
+                flippy.setPosition(1);
+                encoderDrive(DRIVE_SPEED, -54, -54, 0, 5.0);//backup
 
-                encoderDrive(DRIVE_SPEED, 4.5, -4.5, 0, 5.0);//turn 60
-                encoderDrive(DRIVE_SPEED, 17, 17, 0, 5.0); //move to ball 1
+                //for easier retrieval
                 encoderDrive(DRIVE_SPEED, 6.5, -6.5, 0, 5.0);//turn 60
-                encoderDrive(DRIVE_SPEED, 10, 10, 0, 5.0);//backup
-                encoderDrive(DRIVE_SPEED, -58, -58, 0, 5.0);//backup
+                encoderDrive(DRIVE_SPEED, -62, -62, 0, 5.0);//backup
+
             }
-            else if((goldPos <=350) && (goldPos >=201)){
+            else if((detector.getXPosition()>=230) && (detector.getXPosition()<449)){
+                //middle
+                detector.disable();
+
                 encoderDrive(DRIVE_SPEED, 17, 17, 0, 5.0); //move to ball 2
                 encoderDrive(DRIVE_SPEED, 12, -12, 0, 5.0);//turn 90
                 encoderDrive(DRIVE_SPEED, -48, -48, 0, 5.0);//backup
             }
-            else if((goldPos >=351)){
+            else if(detector.getXPosition()>=450){
+                //right
+                detector.disable();
+
                 encoderDrive(DRIVE_SPEED, -4.5, 4.5, 0, 5.0);//turn -60
                 encoderDrive(DRIVE_SPEED, 17, 17, 0, 5.0); //move to ball 3
                 encoderDrive(DRIVE_SPEED, -6.5, 6.5, 0, 5.0);//turn 60
                 encoderDrive(DRIVE_SPEED, -28, -28, 0, 5.0);//backup to square
             }
+/*
 
-            //time conversions
-            if(goldPos >=200){
-                encoderDrive(DRIVE_SPEED, 4.5, -4.5, 0, 1);//turn 60
+            encoderDrive(DRIVE_SPEED, 4.5, -0, 0, 70);//turn 60
+            if(detector.getXPosition()>=0 && (detector.getXPosition()<229)){
+                //left
+                encoderDrive(DRIVE_SPEED, 4.5, -4.5, 0, .7);//turn 60
                 encoderDrive(DRIVE_SPEED, 17, 17, 0, 3); //move to ball 1
                 encoderDrive(DRIVE_SPEED, 6.5, -6.5, 0, .7);//turn 60
                 encoderDrive(DRIVE_SPEED, 10, 10, 0, 2);//backup
                 encoderDrive(DRIVE_SPEED, -58, -58, 0, 3.5);//backup
             }
-            else if((goldPos <=350) && (goldPos >=201)){
-                encoderDrive(DRIVE_SPEED, 17, 17, 0, 2); //move to ball 2
+            else if((detector.getXPosition()>=230) && (detector.getXPosition()<449)){
+                //middle
+                encoderDrive(DRIVE_SPEED, 17, 0, 0, 2); //move to ball 2
                 encoderDrive(DRIVE_SPEED, 12, -12, 0, 1.5);//turn 90
                 encoderDrive(DRIVE_SPEED, -48, -48, 0, 3);//backup
             }
-            else if((goldPos >=350)){
-                encoderDrive(DRIVE_SPEED, -4.5, 4.5, 0, 1);//turn -60
+            else if(detector.getXPosition()>=450){
+                //right
+                encoderDrive(DRIVE_SPEED, -4.5, 0, 0, 1);//turn -60
                 encoderDrive(DRIVE_SPEED, 17, 17, 0, 3); //move to ball 3
                 encoderDrive(DRIVE_SPEED, -6.5, 6.5, 0, .7);//turn 60
                 encoderDrive(DRIVE_SPEED, -28, -28, 0, 2);//backup to square
             }
-*/
 
+*/
 
             // Step through each leg of the path,
             // Note: Reverse movement is obtained by setting a negative distance (not speed).
@@ -99,6 +120,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 //code landing
 //THE TIMES ARE WRONG AND HAVE NOT BEEN TESTED!!!!!!!!!!!!!
+            /*
             encoderDrive(1,0,0,4000,23);
             sleep(500);//stop a bissel
             encoderDrive(1,2,2,0,0.7);
@@ -125,6 +147,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
             telemetry.addData("Path", "Complete");
             telemetry.update();
+   */
         }
 
         /*
@@ -249,6 +272,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 
             // Set up detector
+            telemetry.addData("Status", "DogeCV 2018.0 - Gold Align Example");
+
+            // Set up detector
             detector = new GoldAlignDetector(); // Create detector
             detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance()); // Initialize it with the app context and camera
             detector.useDefaults(); // Set detector to use default settings
@@ -265,7 +291,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
             detector.ratioScorer.weight = 5; //
             detector.ratioScorer.perfectRatio = 1.0; // Ratio adjustment
 
-            //detector.enable(); // Start the detector!
+            detector.enable(); // Start the detector!
 
         }
     }

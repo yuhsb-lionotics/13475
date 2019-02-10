@@ -35,6 +35,7 @@ import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 
 @TeleOp(name = "GoldAlign Example", group = "DogeCV")
@@ -42,6 +43,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class GoldAlignExample extends OpMode {
     // Detector object
     private GoldAlignDetector detector;
+    private DcMotor leftDrive = null;
 
 
     @Override
@@ -67,6 +69,9 @@ public class GoldAlignExample extends OpMode {
 
         detector.enable(); // Start the detector!
 
+        leftDrive = hardwareMap.get(DcMotor.class, "left_drive");
+        leftDrive.setDirection(DcMotor.Direction.FORWARD);
+
 
     }
 
@@ -88,10 +93,25 @@ public class GoldAlignExample extends OpMode {
     /*
      * Code to run REPEATEDLY when the driver hits PLAY
      */
+
+
     @Override
     public void loop() {
         telemetry.addData("IsAligned", detector.getAligned()); // Is the bot aligned with the gold mineral?
         telemetry.addData("X Pos", detector.getXPosition()); // Gold X position.
+
+        if(detector.getXPosition()>=450){
+            //on right
+            leftDrive.setPower(1);
+        }
+        else if((detector.getXPosition()>=230) && (detector.getXPosition()<449)){
+            //middle
+            leftDrive.setPower(0);
+        }
+        else if(detector.getXPosition()>=0 && (detector.getXPosition()<229)){
+            //left
+            leftDrive.setPower(-1);
+        }
     }
 
     /*

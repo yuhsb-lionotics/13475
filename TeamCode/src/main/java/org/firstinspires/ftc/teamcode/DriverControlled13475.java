@@ -37,8 +37,6 @@ public class DriverControlled13475 extends LinearOpMode {
     private DcMotor spinnyArmTilt1 = null;
     private DcMotor spinnyArmTilt2 = null;
 
-
-    //following is tbt:
     private CRServo spinner1 = null;
     private CRServo spinner2 = null;
     private Servo dumper1 = null;
