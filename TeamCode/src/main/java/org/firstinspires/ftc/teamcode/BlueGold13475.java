@@ -50,22 +50,29 @@ import com.qualcomm.robotcore.util.ElapsedTime;
             if(detector.getXPosition()>=0 && (detector.getXPosition()<229)){
                 //left
                 detector.disable();
-                encoderDrive(DRIVE_SPEED, 2, 2, 0, 5.0);//turn 60
+                encoderDrive(.3, 2.5, 2.5, 0, 5.0);
+                encoderDrive(.3, 3, -3, 0, 5.0);
+                encoderDrive(.3, -3.5, -3.5, 0, 5.0);
+                encoderDrive(.3, -3, 3, 0, 5.0);
+
+                encoderDrive(DRIVE_SPEED, -14, 14, 0, 5.0);
+                encoderDrive(DRIVE_SPEED, 3, 3, 0, 5.0);
                 encoderDrive(DRIVE_SPEED, 7.5, -7.5, 0, 5.0);//turn 60
-                encoderDrive(DRIVE_SPEED, 21, 21, 0, 5.0); //move to ball 1
+                encoderDrive(DRIVE_SPEED, 18, 18, 0, 5.0); //move to ball 1
                 encoderDrive(DRIVE_SPEED, 14.5, -14.5, 0, 5.0);//turn 60
                 encoderDrive(DRIVE_SPEED, 15, 15, 0, 5.0);//backup
                 encoderDrive(DRIVE_SPEED, -62, -62, 0, 5.0);//backup
                 encoderDrive(DRIVE_SPEED, -6, 6, 0, 5.0);//turn 60
                 encoderDrive(DRIVE_SPEED, 58, 58, 0, 5.0);//backup
+                encoderDrive(DRIVE_SPEED, -30, 30, 0, 5.0);
                 flippy.setPosition(0);
-                sleep(1000);
+                sleep(2000);
                 flippy.setPosition(1);
-                encoderDrive(DRIVE_SPEED, -54, -54, 0, 5.0);//backup
+                encoderDrive(DRIVE_SPEED, 54, 54, 0, 5.0);//backup
 
                 //for easier retrieval
-                encoderDrive(DRIVE_SPEED, 6.5, -6.5, 0, 5.0);//turn 60
-                encoderDrive(DRIVE_SPEED, -62, -62, 0, 5.0);//backup
+
+
 
             }
             else if((detector.getXPosition()>=230) && (detector.getXPosition()<449)){
