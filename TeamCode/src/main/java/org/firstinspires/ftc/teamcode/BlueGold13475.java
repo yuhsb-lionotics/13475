@@ -55,22 +55,28 @@ import com.qualcomm.robotcore.util.ElapsedTime;
                 encoderDrive(.3, -3.5, -3.5, 0, 5.0);
                 encoderDrive(.3, -3, 3, 0, 5.0);
 
-                encoderDrive(DRIVE_SPEED, -14, 14, 0, 5.0);
-                encoderDrive(DRIVE_SPEED, 3, 3, 0, 5.0);
+                encoderDrive(DRIVE_SPEED, -13.5, 13.5, 0, 5.0);//turn to face balls
+                encoderDrive(DRIVE_SPEED, 3, 3, 0, 5.0);//not totlly sure why this is here tbh
                 encoderDrive(DRIVE_SPEED, 7.5, -7.5, 0, 5.0);//turn 60
                 encoderDrive(DRIVE_SPEED, 18, 18, 0, 5.0); //move to ball 1
-                encoderDrive(DRIVE_SPEED, 14.5, -14.5, 0, 5.0);//turn 60
-                encoderDrive(DRIVE_SPEED, 15, 15, 0, 5.0);//backup
-                encoderDrive(DRIVE_SPEED, -62, -62, 0, 5.0);//backup
+                encoderDrive(DRIVE_SPEED, 7.5, -7.5, 0, 5.0);//turn 60
+                encoderDrive(DRIVE_SPEED, 15, 15, 0, 5.0);//onward
+
+                encoderDrive(DRIVE_SPEED, 5, -5, 0, 5.0);//turn to hit ball
+                encoderDrive(.2, -13, -13, 0, 5.0);//hit ball
+                encoderDrive(DRIVE_SPEED, 13, 13, 0, 5.0);//reverse
+                encoderDrive(DRIVE_SPEED, -6, 6, 0, 5.0);//reverse
+
+                encoderDrive(DRIVE_SPEED, -70, -70, 0, 5.0);//backup
                 encoderDrive(DRIVE_SPEED, -6, 6, 0, 5.0);//turn 60
-                encoderDrive(DRIVE_SPEED, 58, 58, 0, 5.0);//backup
-                encoderDrive(DRIVE_SPEED, -30, 30, 0, 5.0);
+                encoderDrive(DRIVE_SPEED, 40, 40, 0, 5.0);//backup
+                encoderDrive(DRIVE_SPEED, -24, 24, 0, 5.0);
                 flippy.setPosition(0);
                 sleep(2000);
                 flippy.setPosition(1);
                 encoderDrive(DRIVE_SPEED, 54, 54, 0, 5.0);//backup
 
-                //for easier retrieval
+
 
 
 
@@ -78,10 +84,26 @@ import com.qualcomm.robotcore.util.ElapsedTime;
             else if((detector.getXPosition()>=230) && (detector.getXPosition()<449)){
                 //middle
                 detector.disable();
+                encoderDrive(.3, 2.5, 2.5, 0, 5.0);
+                encoderDrive(.3, 3, -3, 0, 5.0);
+                encoderDrive(.3, -3.5, -3.5, 0, 5.0);
+                encoderDrive(.3, -3, 3, 0, 5.0);
+                encoderDrive(DRIVE_SPEED, 11, -11, 0, 5.0);//turn to face balls
+                encoderDrive(.3, -16, -16, 0, 5.0);//hit mid ball
+                encoderDrive(DRIVE_SPEED, 4, 4, 0, 5.0);//return
+                encoderDrive(DRIVE_SPEED, -11.5, 11.5, 0, 5.0);//turn to backup
 
-                encoderDrive(DRIVE_SPEED, 17, 17, 0, 5.0); //move to ball 2
-                encoderDrive(DRIVE_SPEED, 12, -12, 0, 5.0);//turn 90
-                encoderDrive(DRIVE_SPEED, -48, -48, 0, 5.0);//backup
+                encoderDrive(DRIVE_SPEED, -45, -45, 0, 5.0);//backup
+                encoderDrive(DRIVE_SPEED, -6, 6, 0, 5.0);//turn 60
+                encoderDrive(DRIVE_SPEED, 50, 50, 0, 5.0);//backup
+                encoderDrive(DRIVE_SPEED, -24.5, 24.5, 0, 5.0);
+                flippy.setPosition(0);
+                sleep(2000);
+                flippy.setPosition(1);
+                encoderDrive(DRIVE_SPEED, 54, 54, 0, 5.0);//backup
+
+
+
             }
             else if(detector.getXPosition()>=450){
                 //right
