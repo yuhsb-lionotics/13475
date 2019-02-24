@@ -108,11 +108,32 @@ import com.qualcomm.robotcore.util.ElapsedTime;
             else if(detector.getXPosition()>=450){
                 //right
                 detector.disable();
+                encoderDrive(.3, 2.5, 2.5, 0, 5.0);
+                encoderDrive(.3, 3, -3, 0, 5.0);
+                encoderDrive(.3, -3.5, -3.5, 0, 5.0);
+                encoderDrive(.3, -3, 3, 0, 5.0);
+                encoderDrive(DRIVE_SPEED, 11, -11, 0, 5.0);//turn to face balls
+                encoderDrive(.3, -9, -9, 0, 5.0);//move into intersection
+                encoderDrive(DRIVE_SPEED, -11.5, 11.5, 0, 5.0);//turn
+                encoderDrive(DRIVE_SPEED, -11, -11, 0, 5.0);//move to ball
+                encoderDrive(DRIVE_SPEED, 11.5, -11.5, 0, 5.0);//turn to face ball
 
-                encoderDrive(DRIVE_SPEED, -4.5, 4.5, 0, 5.0);//turn -60
-                encoderDrive(DRIVE_SPEED, 17, 17, 0, 5.0); //move to ball 3
-                encoderDrive(DRIVE_SPEED, -6.5, 6.5, 0, 5.0);//turn 60
-                encoderDrive(DRIVE_SPEED, -28, -28, 0, 5.0);//backup to square
+                encoderDrive(.3, -13, -13, 0, 5.0);//hit ball
+                encoderDrive(DRIVE_SPEED, 10, 10, 0, 5.0);//return
+                encoderDrive(DRIVE_SPEED, -11.5, 11.5, 0, 5.0);//turn to backup
+
+                encoderDrive(DRIVE_SPEED, -35, -35, 0, 5.0);//backup
+                encoderDrive(DRIVE_SPEED, -6, 6, 0, 5.0);//turn 60
+                encoderDrive(DRIVE_SPEED, 50, 50, 0, 5.0);//backup
+                encoderDrive(DRIVE_SPEED, -24.5, 24.5, 0, 5.0);
+                flippy.setPosition(0);
+                sleep(2000);
+                flippy.setPosition(1);
+                encoderDrive(DRIVE_SPEED, 54, 54, 0, 5.0);//backup
+
+
+
+
             }
 /*
 
