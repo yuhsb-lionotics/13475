@@ -72,7 +72,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
                 encoderDrive(DRIVE_SPEED, 40, 40, 0, 5.0);//backup
                 encoderDrive(DRIVE_SPEED, -24, 24, 0, 5.0);
                 flippy.setPosition(0);
-                sleep(2000);
+                sleep(1000);
                 flippy.setPosition(1);
                 encoderDrive(DRIVE_SPEED, 54, 54, 0, 5.0);//backup
 
@@ -98,7 +98,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
                 encoderDrive(DRIVE_SPEED, 50, 50, 0, 5.0);//backup
                 encoderDrive(DRIVE_SPEED, -24.5, 24.5, 0, 5.0);
                 flippy.setPosition(0);
-                sleep(2000);
+                sleep(1000);
                 flippy.setPosition(1);
                 encoderDrive(DRIVE_SPEED, 54, 54, 0, 5.0);//backup
 
@@ -127,7 +127,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
                 encoderDrive(DRIVE_SPEED, 50, 50, 0, 5.0);//backup
                 encoderDrive(DRIVE_SPEED, -24.5, 24.5, 0, 5.0);
                 flippy.setPosition(0);
-                sleep(2000);
+                sleep(1000);
                 flippy.setPosition(1);
                 encoderDrive(DRIVE_SPEED, 54, 54, 0, 5.0);//backup
 

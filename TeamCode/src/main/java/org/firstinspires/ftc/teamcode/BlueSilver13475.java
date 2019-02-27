@@ -4,34 +4,34 @@ import com.disnodeteam.dogecv.CameraViewDisplay;
 import com.disnodeteam.dogecv.DogeCV;
 import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+//this is a test for github - please ignore
 
-@Autonomous(name="BlueSilver13475", group="Autonomous")
+@Autonomous(name = "BlueSilver13475", group = "Autonomous")
 //@Disabled
 public class BlueSilver13475 extends LinearOpMode {
-
+    private GoldAlignDetector detector;
 
     private DcMotor leftDrive = null;
     private DcMotor rightDrive = null;
-    private DcMotor landerRiser = null;
     private DcMotor landerRiser1 = null;
     private DcMotor landerRiser2 = null;
     private Servo flippy = null;
-    private ElapsedTime     runtime = new ElapsedTime();
 
-    static final double     COUNTS_PER_MOTOR_REV    = 1220 ;    // eg: TETRIX Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 2.0 ;     // This is < 1.0 if geared UP
-    static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
-    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+    private ElapsedTime runtime = new ElapsedTime();
+
+    static final double COUNTS_PER_MOTOR_REV = 1220;    // eg: TETRIX Motor Encoder
+    static final double DRIVE_GEAR_REDUCTION = 1.0;     // This is < 1.0 if geared UP
+    static final double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference
+    static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 0.6;
-    static final double     TURN_SPEED              = 0.5;
-    static final double     RISER_SPEED              = 0.5;
+    static final double DRIVE_SPEED = 0.6;
+    static final double TURN_SPEED = 0.5;
+    static final double RISER_SPEED = 0.5;
 
 
     @Override
@@ -41,45 +41,97 @@ public class BlueSilver13475 extends LinearOpMode {
         waitForStart();
 
 
+        //the following code isn't ready for qualifiers :(
+        //instead, we will drive to crater, drop derky derk, and run for sweet life
 
-        // Step through each leg of the path,
-        // Note: Reverse movement is obtained by setting a negative distance (not speed).
-        //Timeout is how much time is alloted for the moter to get to a desired position
-        //i am assuming 90 turn is 12'
 
-     //this is code to disembark
-        encoderDrive(1,0,0,4000,15);
-        sleep(500);//stop a bissel
-        encoderDrive(1,2,2,0,0.7);
-        encoderDrive(1,2,-2,0,2);
+        if(detector.getXPosition()>=0 && (detector.getXPosition()<229)){
+            //left
+            detector.disable();
+            encoderDrive(.3, 2.5, 2.5, 0, 5.0);
+            encoderDrive(.3, 3, -3, 0, 5.0);
+            encoderDrive(.3, -3.5, -3.5, 0, 5.0);
+            encoderDrive(.3, -3, 3, 0, 5.0);
 
-     //code to balls
-        encoderDrive(DRIVE_SPEED, 4.5, -4.5,0, 5.0);//turn 60
-        encoderDrive(DRIVE_SPEED, 32, 32,0, 5.0); //move to ball 1
-        encoderDrive(DRIVE_SPEED, -7, 7,0, 5.0);//turn 52
-        //check ball
-        encoderDrive(DRIVE_SPEED, 16, 16,0, 5.0);//move to ball two
-        //check
-        encoderDrive(DRIVE_SPEED, 16, 16,0, 5.0);//move to ball three
-        //check
+            encoderDrive(DRIVE_SPEED, -13.5, 13.5, 0, 5.0);//turn to face balls
+            encoderDrive(DRIVE_SPEED, 3, 3, 0, 5.0);//not totlly sure why this is here tbh
+            encoderDrive(DRIVE_SPEED, 7.5, -7.5, 0, 5.0);//turn 60
+            encoderDrive(DRIVE_SPEED, 18, 18, 0, 5.0); //move to ball 1
+            encoderDrive(DRIVE_SPEED, 10, -10, 0, 5.0);//turn 60 (was 7.5)
+            //encoderDrive(DRIVE_SPEED, 15, 15, 0, 5.0);//onward
 
-    //code to sqver
-        encoderDrive(DRIVE_SPEED, 16, 16,0, 5.0);//move to turn position
-        encoderDrive(DRIVE_SPEED, 4.2, -4.2,0, 5.0);//35%(because Dovi. 125 deg) turn. note this turn is backing into itself
-        encoderDrive(DRIVE_SPEED, -55, -55,0, 5.0);//move to square
+            //encoderDrive(DRIVE_SPEED, 5, -5, 0, 5.0);//turn to hit ball
+            encoderDrive(.2, -5.25, -5.25, 0, 5.0);//hit ball
+            encoderDrive(DRIVE_SPEED, 6, 6, 0, 5.0);//reverse
+            encoderDrive(DRIVE_SPEED, -6, 6, 0, 5.0);//turn (was 6)
 
-        flippy.setPosition(0);
-        sleep(500);
-        flippy.setPosition(1);
-
-     //to carter
-        encoderDrive(DRIVE_SPEED, 60, 60,0, 5.0);
-
+            encoderDrive(DRIVE_SPEED, -60, -60, 0, 5.0);//backup
+            encoderDrive(DRIVE_SPEED, -6, 6, 0, 5.0);//turn 60
+            encoderDrive(DRIVE_SPEED, -30, -30, 0, 5.0);//backup
+            //encoderDrive(DRIVE_SPEED, -24, 24, 0, 5.0);
+            flippy.setPosition(0);
+            sleep(1000);
+            flippy.setPosition(1);
+            encoderDrive(DRIVE_SPEED, 44, 44, 0, 5.0);//backup
 
 
 
-        telemetry.addData("Path", "Complete");
-        telemetry.update();
+
+
+        }
+        else if((detector.getXPosition()>=230) && (detector.getXPosition()<449)){
+            //middle
+            detector.disable();
+            encoderDrive(.3, 2.5, 2.5, 0, 5.0);
+            encoderDrive(.3, 3, -3, 0, 5.0);
+            encoderDrive(.3, -3.5, -3.5, 0, 5.0);
+            encoderDrive(.3, -3, 3, 0, 5.0);
+            encoderDrive(DRIVE_SPEED, 11, -11, 0, 5.0);//turn to face balls
+            encoderDrive(.3, -17, -17, 0, 5.0);//hit mid ball
+            encoderDrive(DRIVE_SPEED, 5, 5, 0, 5.0);//return
+            encoderDrive(DRIVE_SPEED, -11.5, 11.5, 0, 5.0);//turn to backup
+
+            encoderDrive(DRIVE_SPEED, -46, -46, 0, 5.0);//backup
+            encoderDrive(DRIVE_SPEED, -6, 6, 0, 5.0);//turn 60
+            encoderDrive(DRIVE_SPEED, -25, -25, 0, 5.0);//backup
+            flippy.setPosition(0);
+            sleep(1000);
+            flippy.setPosition(1);
+            encoderDrive(DRIVE_SPEED, 48, 48, 0, 5.0);//backup
+
+
+
+        }
+        else if(detector.getXPosition()>=450){
+            //right
+            detector.disable();
+            encoderDrive(.3, 2.5, 2.5, 0, 5.0);
+            encoderDrive(.3, 3, -3, 0, 5.0);
+            encoderDrive(.3, -3.5, -3.5, 0, 5.0);
+            encoderDrive(.3, -3, 3, 0, 5.0);
+            encoderDrive(DRIVE_SPEED, 11, -11, 0, 5.0);//turn to face balls
+            encoderDrive(.3, -9, -9, 0, 5.0);//move into intersection
+            encoderDrive(DRIVE_SPEED, -11.5, 11.5, 0, 5.0);//turn
+            encoderDrive(DRIVE_SPEED, -11, -11, 0, 5.0);//move to ball
+            encoderDrive(DRIVE_SPEED, 11.5, -11.5, 0, 5.0);//turn to face ball
+
+            encoderDrive(.3, -7, -7, 0, 5.0);//hit ball
+            encoderDrive(DRIVE_SPEED, 4, 4, 0, 5.0);//return
+            encoderDrive(DRIVE_SPEED, -11.5, 11.5, 0, 5.0);//turn to backup
+
+            encoderDrive(DRIVE_SPEED, -35, -35, 0, 5.0);//backup
+            encoderDrive(DRIVE_SPEED, -6, 6, 0, 5.0);//turn 60
+            encoderDrive(DRIVE_SPEED, -27, -27, 0, 5.0);//backup
+            flippy.setPosition(0);
+            sleep(1000);
+            flippy.setPosition(1);
+            encoderDrive(DRIVE_SPEED, 48, 48, 0, 5.0);//backup
+
+
+
+
+        }
+
     }
 
     /*
@@ -174,7 +226,6 @@ public class BlueSilver13475 extends LinearOpMode {
         landerRiser2 = hardwareMap.get(DcMotor.class, "lander_riser2");
         flippy= hardwareMap.servo.get("flippy_flipper");
 
-
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
 
@@ -204,6 +255,27 @@ public class BlueSilver13475 extends LinearOpMode {
 
 
 
-    }
+        // Set up detector
+        telemetry.addData("Status", "DogeCV 2018.0 - Gold Align Example");
 
+        // Set up detector
+        detector = new GoldAlignDetector(); // Create detector
+        detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance()); // Initialize it with the app context and camera
+        detector.useDefaults(); // Set detector to use default settings
+
+        // Optional tuning
+        detector.alignSize = 100; // How wide (in pixels) is the range in which the gold object will be aligned. (Represented by green bars in the preview)
+        detector.alignPosOffset = 0; // How far from center frame to offset this alignment zone.
+        detector.downscale = 0.4; // How much to downscale the input frames
+
+        detector.areaScoringMethod = DogeCV.AreaScoringMethod.MAX_AREA; // Can also be PERFECT_AREA
+        //detector.perfectAreaScorer.perfectArea = 10000; // if using PERFECT_AREA scoring
+        detector.maxAreaScorer.weight = 0.005; //
+
+        detector.ratioScorer.weight = 5; //
+        detector.ratioScorer.perfectRatio = 1.0; // Ratio adjustment
+
+        detector.enable(); // Start the detector!
+
+    }
 }
