@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -9,7 +8,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 //hello, i am test. dont remove me pls - ok, now u can
-//im also a test, how are you? wounderful, thank you
 /**
  * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
  * the autonomous or the teleop period of an FTC match. The names of OpModes appear on the menu
@@ -60,20 +58,24 @@ public class DriverControlled13475 extends LinearOpMode {
             float driveLeft = gamepad1.left_stick_y;
             float driveRight = gamepad1.right_stick_y;
             float landerRiserpwr = gamepad1.left_trigger - gamepad1.right_trigger;
-
             float spinnyArmExtpwr = gamepad2.right_trigger - gamepad2.left_trigger;
 
-            while (gamepad2.dpad_down) {
-                spinnyArmTilt1.setPower(-.3);
-                spinnyArmTilt2.setPower(-.3);
+            while (gamepad2.dpad_down) {//in
+                spinnyArmTilt1.setPower(-.5);
+                spinnyArmTilt2.setPower(-.5);
+                spinnyArmExt.setPower(-.11);
             }
-            while (gamepad2.dpad_up) {
-                spinnyArmTilt1.setPower(.3);
-                spinnyArmTilt2.setPower(.3);
+            while (gamepad2.dpad_up) {//out
+                spinnyArmTilt1.setPower(.5);
+                spinnyArmTilt2.setPower(.5);
+                spinnyArmExt.setPower(.11);
+
             }
             if (!(gamepad2.dpad_up || gamepad2.dpad_down)) {
                 spinnyArmTilt1.setPower(0);
                 spinnyArmTilt2.setPower(0);
+                spinnyArmExt.setPower(0);
+
             }
 
 
