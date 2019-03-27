@@ -7,13 +7,13 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name="DriverControlled13475", group="LinearOpMode")
 
-public class ZachsGonnaKickMeOffRobotics {
+public class ZachsGonnaKickMeOffRobotics extends LinearOpMode {
 
     private DcMotor rightDrive = null;
     private DcMotor leftDrive = null;
     private DcMotor landerRiserA = null;
     private DcMotor landerRiserB = null;
-    private DcMotor spinnyArmExt= null;
+    private DcMotor spinnyArmExt = null;
     private DcMotor spinnyArmTiltA = null;
     private DcMotor spinnyArmTiltB = null;
     private CRServo spinnerA = null;
@@ -30,10 +30,41 @@ public class ZachsGonnaKickMeOffRobotics {
         boolean flipperCount= false;
         int spinnerCount = 0;
 
-        while (opModeIsActive)
+        while(opModeIsActive()) {
+
+            float driveLeft = gamepad1.left_stick_y;
+            float driveRight = gamepad1.right_stick_y;
+            float landerRiserpwr = gamepad1.left_trigger - gamepad1.right_trigger;
+            float spinnyArmExtpwr = gamepad2.right_trigger - gamepad2.left_trigger;
+
+            while (gamepad2.dpad_down) {
+                spinnyArmTiltA.setPower(-.5);
+                spinnyArmTiltB.setPower(-.5);
+                spinnyArmExt.setPower(-.11);
+            }
+            while (gamepad2.dpad_up) {
+                spinnyArmTiltA.setPower(.5);
+                spinnyArmTiltB.setPower(.5);
+                spinnyArmExt.setPower(.11);
+
+            }
+            if (!(gamepad2.dpad_up || gamepad2.dpad_down)) {
+                spinnyArmTiltA.setPower(0);
+                spinnyArmTiltB.setPower(0);
+                spinnyArmExt.setPower(0);
+
+            }
+
+            leftDrive.setPower(driveLeft);
+            rightDrive.setPower(driveRight);
+            landerRiserA.setPower(landerRiserpwr);
+            landerRiserB.setPower(landerRiserpwr);
+            spinnyArmExt.setPower(spinnyArmExtpwr);
+        }
     }
 
     private void setUp(){
+
 
         leftDrive = hardwareMap.get(DcMotor.class, "leftDrive");
         rightDrive = hardwareMap.get(DcMotor.class, "rightDrive");
@@ -46,7 +77,13 @@ public class ZachsGonnaKickMeOffRobotics {
 
         spinnerA = hardwareMap.crservo.get("spinnerA");
         spinnerB = hardwareMap.crservo.get("spinnerB");
-        dumperA = hardwareMap.crservo.get("dumperA");
-        dumperB = hardwareMap.crservo.get("dumperB");
-        flippy = hardwareMap.crservo.get("flippity_flip_flip");
-    }
+        dumperA = hardwareMap.servo.get("dumperA");
+        dumperB = hardwareMap.servo.get("dumperB");
+        flippy = hardwareMap.servo.get("flippity_flip_flip");
+
+        spinnyArmExt.setDirection(DcMotor.Direction.REVERSE);
+        spinnyArmTiltA.setDirection(DcMotor.Direction.FORWARD);
+        spinnyArmTiltB.setDirection(DcMotor.Direction.REVERSE);
+        leftDrive.setDirection(DcMotor.Direction.FORWARD);
+        rightDrive.setDirection(DcMotor.Direction.REVERSE);
+    }}
