@@ -60,6 +60,42 @@ public class ZachsGonnaKickMeOffRobotics extends LinearOpMode {
             landerRiserA.setPower(landerRiserpwr);
             landerRiserB.setPower(landerRiserpwr);
             spinnyArmExt.setPower(spinnyArmExtpwr);
+            
+            
+            if (gamepad2.x) {
+                    spinnerB.setPower(-1);
+                    spinnerA.setPower(1);
+                    spinnerCount = 1;
+                } else if (gamepad2.a) {
+                    spinnerB.setPower(0);
+                    spinnerA.setPower(0);
+                    spinnerCount = 2;
+                } else if (gamepad2.b) {
+                    spinnerA.setPower(1);
+                    spinnerB.setPower(-1);
+                    spinnerCount = 0;
+                }
+            
+             if (gamepad2.right_bumper) {
+                dumperA.setPosition(.5);
+                dumperB.setPosition(.5);
+            }
+            if (gamepad2.left_bumper) {
+                dumperA.setPosition(.002);
+                dumperB.setPosition(.002);
+            }
+            
+             if (gamepad2.y) {
+
+                if (flipperCount == false) {
+                    flippy.setPosition(0);
+                    flipperCount = true;
+                } else if (flipperCount == true) {
+                    flippy.setPosition(1);
+                    flipperCount = false;
+                }
+            }
+            
         }
     }
 
@@ -86,4 +122,6 @@ public class ZachsGonnaKickMeOffRobotics extends LinearOpMode {
         spinnyArmTiltB.setDirection(DcMotor.Direction.REVERSE);
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
-    }}
+        
+        waitForStart();
+    }
