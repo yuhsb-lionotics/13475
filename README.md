@@ -8,3 +8,5 @@ Then, if it is your first time downloading, open Andriod Studio and "Open Existi
 Note that the wiki is an "evergreen" document that is constantly being updated and edited.  It contains the most current information about the *FIRST* Tech Challenge software and control system.
 
 Figure the rest out yourself
+
+(in the future, i will bn set up toturial on Source Tree ingegration and , iyH, bezras HaShem, Please dear God, perhaps and adb (wireless code upload) totirial)
