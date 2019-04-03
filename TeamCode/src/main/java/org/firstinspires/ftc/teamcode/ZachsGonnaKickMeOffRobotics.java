@@ -115,7 +115,7 @@ public class ZachsGonnaKickMeOffRobotics extends LinearOpMode {
         spinnerB = hardwareMap.crservo.get("spinnerB");
         dumperA = hardwareMap.servo.get("dumperA");
         dumperB = hardwareMap.servo.get("dumperB");
-        flippy = hardwareMap.servo.get("flippity_flip_flip");
+        flippy = hardwareMap.servo.get("flippy");
 
         spinnyArmExt.setDirection(DcMotor.Direction.REVERSE);
         spinnyArmTiltA.setDirection(DcMotor.Direction.FORWARD);
