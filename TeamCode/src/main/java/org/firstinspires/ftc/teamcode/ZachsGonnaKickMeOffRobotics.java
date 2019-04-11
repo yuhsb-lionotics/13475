@@ -23,7 +23,6 @@ public class ZachsGonnaKickMeOffRobotics extends LinearOpMode {
     private Servo flippy = null;
 
 
-}
     @Override
     public void runOpMode() {
         setUp();
@@ -125,3 +124,4 @@ public class ZachsGonnaKickMeOffRobotics extends LinearOpMode {
         
         waitForStart();
     }
+}
